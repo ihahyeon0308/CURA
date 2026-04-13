@@ -1,0 +1,10 @@
+{
+  "name": "@cura/domain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@cura/contracts": "workspace:*"
+  }
+}
