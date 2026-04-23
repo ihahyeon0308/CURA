@@ -128,8 +128,8 @@ Definition of done:
 
 | Phase | Status | Notes |
 | --- | --- | --- |
-| 1. Persistence foundation | pending | Seeded domain data still powers the main read path. |
-| 2. Search vertical slice | pending | Search UI exists, but the real persistence and indexing path is unfinished. |
+| 1. Persistence foundation | completed | PostgreSQL schema, bootstrap migration/seed, and DB-backed repository for read paths were implemented. |
+| 2. Search vertical slice | in_progress | Search and recommendations now read from PostgreSQL through API; dedicated search indexing is still pending. |
 | 3. Hospital detail and price intelligence | pending | Detail and pricing logic still need a real storage-backed aggregation path. |
 | 4. Review, contribution, and moderation write path | pending | Controllers exist in scaffold form, but durable write workflows are unfinished. |
 | 5. Async jobs, analytics, and operational hardening | pending | Queueing and analytics integration are represented architecturally, not fully delivered. |
@@ -155,3 +155,19 @@ Use this when a phase materially moves:
 - Risks / blockers:
 - Docs updated:
 ```
+
+### 2026-04-23 - Phase 1
+
+- Completed: Added PostgreSQL wiring in API, migration/seed SQL, and repository queries for search, hospital, specialty, treatment, recommendation, community, and review write.
+- Verified: TypeScript build/typecheck passes for `@cura/api` and `@cura/web`.
+- Remaining: Replace in-DB bootstrap seed with official ingestion pipeline and add dedicated OpenSearch indexing layer.
+- Risks / blockers: Current DB repository reads full tables before in-memory aggregation; acceptable for MVP sample size but not final scale.
+- Docs updated: `docs/implement.md`.
+
+### 2026-04-23 - Phase 2 (Search Sub-slice)
+
+- Completed: Replaced web `GET /api/v1/search` local mock path with PostgreSQL-backed query and scoring flow.
+- Verified: `corepack pnpm --filter @cura/web typecheck` passes after the change.
+- Remaining: Search indexing pipeline (OpenSearch or equivalent derived index) is still pending.
+- Risks / blockers: `@cura/web build` timed out in this session, likely due local runtime/file-lock conditions.
+- Docs updated: `docs/implement.md`.

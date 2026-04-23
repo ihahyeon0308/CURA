@@ -6,9 +6,11 @@ export class CommunityController {
   constructor(private readonly repository: RepositoryService) {}
 
   @Get()
-  getPosts() {
+  async getPosts() {
+    const items = await this.repository.getCommunityPosts();
+
     return {
-      items: this.repository.getCommunityPosts(),
+      items,
     };
   }
 }

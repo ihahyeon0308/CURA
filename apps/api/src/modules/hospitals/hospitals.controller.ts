@@ -6,8 +6,8 @@ export class HospitalsController {
   constructor(private readonly repository: RepositoryService) {}
 
   @Get(":hospitalId")
-  getHospital(@Param("hospitalId") hospitalId: string) {
-    const detail = this.repository.getHospitalDetail(hospitalId);
+  async getHospital(@Param("hospitalId") hospitalId: string) {
+    const detail = await this.repository.getHospitalDetail(hospitalId);
 
     if (!detail) {
       throw new NotFoundException("Hospital not found.");
@@ -17,8 +17,8 @@ export class HospitalsController {
   }
 
   @Get(":hospitalId/specialties/:specialtySlug")
-  getHospitalSpecialty(@Param("hospitalId") hospitalId: string, @Param("specialtySlug") specialtySlug: string) {
-    const detail = this.repository.getHospitalSpecialtyDetail(hospitalId, specialtySlug);
+  async getHospitalSpecialty(@Param("hospitalId") hospitalId: string, @Param("specialtySlug") specialtySlug: string) {
+    const detail = await this.repository.getHospitalSpecialtyDetail(hospitalId, specialtySlug);
 
     if (!detail) {
       throw new NotFoundException("Hospital specialty not found.");
@@ -28,8 +28,8 @@ export class HospitalsController {
   }
 
   @Get(":hospitalId/prices")
-  getPriceAnalytics(@Param("hospitalId") hospitalId: string, @Query("treatment") treatment: string) {
-    const analytics = this.repository.getPriceAnalytics(hospitalId, treatment);
+  async getPriceAnalytics(@Param("hospitalId") hospitalId: string, @Query("treatment") treatment: string) {
+    const analytics = await this.repository.getPriceAnalytics(hospitalId, treatment);
 
     if (!analytics.treatment) {
       throw new NotFoundException("Treatment not found.");

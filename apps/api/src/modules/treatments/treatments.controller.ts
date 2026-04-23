@@ -6,8 +6,8 @@ export class TreatmentsController {
   constructor(private readonly repository: RepositoryService) {}
 
   @Get(":slug")
-  getTreatment(@Param("slug") slug: string) {
-    const detail = this.repository.getTreatmentDetail(slug);
+  async getTreatment(@Param("slug") slug: string) {
+    const detail = await this.repository.getTreatmentDetail(slug);
 
     if (!detail) {
       throw new NotFoundException("Treatment not found.");

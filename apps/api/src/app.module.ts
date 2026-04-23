@@ -1,4 +1,6 @@
 import { Module } from "@nestjs/common";
+import { DatabaseInitService } from "./common/database-init.service";
+import { PostgresService } from "./common/postgres.service";
 import { RepositoryService } from "./common/repository.service";
 import { HealthController } from "./modules/health/health.controller";
 import { SearchController } from "./modules/search/search.controller";
@@ -18,6 +20,6 @@ import { TreatmentsController } from "./modules/treatments/treatments.controller
     CommunityController,
     TreatmentsController,
   ],
-  providers: [RepositoryService],
+  providers: [PostgresService, DatabaseInitService, RepositoryService],
 })
 export class AppModule {}

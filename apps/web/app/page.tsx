@@ -1,13 +1,7 @@
 import Link from "next/link";
-import { SeedRepository } from "@cura/domain";
 import { Nav } from "../components/nav";
 
-const repository = new SeedRepository();
-
 export default function HomePage() {
-  const hospitals = repository.getHospitals();
-  const specialties = repository.getSpecialties();
-
   return (
     <main className="shell">
       <Nav />
@@ -21,9 +15,9 @@ export default function HomePage() {
               pretending every treatment is equally comparable.
             </p>
             <div className="chip-row">
-              <span className="chip">{hospitals.length} seeded hospitals</span>
-              <span className="chip">{specialties.length} specialty lanes</span>
-              <span className="chip">typed API and web MVP</span>
+              <span className="chip">postgresql-backed api</span>
+              <span className="chip">confidence-aware ranking</span>
+              <span className="chip">typed contracts</span>
             </div>
           </div>
           <div className="panel">
@@ -32,7 +26,7 @@ export default function HomePage() {
               <li>Unified search over hospitals and specialties</li>
               <li>Hospital detail pages with scorecards and community context</li>
               <li>Recommendation views for specialty and treatment scenarios</li>
-              <li>Seeded review, pricing, and trust scoring domain logic</li>
+              <li>PostgreSQL-backed repository with migration and bootstrap seed</li>
             </ul>
             <Link href="/search" className="chip">
               Explore live MVP pages

@@ -7,8 +7,8 @@ export class RecommendationsController {
   constructor(private readonly repository: RepositoryService) {}
 
   @Get()
-  getRecommendations(@Query() query: RecommendationQuery) {
-    const items = this.repository.getRecommendations(query);
+  async getRecommendations(@Query() query: RecommendationQuery) {
+    const items = await this.repository.getRecommendations(query);
 
     return {
       items,

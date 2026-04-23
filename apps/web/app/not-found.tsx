@@ -9,7 +9,7 @@ export default function NotFoundPage() {
         <div className="eyebrow">Not Found</div>
         <h1 className="headline">This record is not in the current MVP dataset.</h1>
         <p className="subtle">
-          The typed routes are wired, but the seeded repository only contains a small Seoul hospital sample for now.
+          The typed routes are wired, but this ID is not currently available in the database-backed MVP set.
         </p>
         <Link href="/search" className="chip">
           Return to search

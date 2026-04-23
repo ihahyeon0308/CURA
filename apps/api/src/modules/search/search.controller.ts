@@ -7,8 +7,8 @@ export class SearchController {
   constructor(private readonly repository: RepositoryService) {}
 
   @Get()
-  search(@Query() query: SearchQuery) {
-    const items = this.repository.search(query);
+  async search(@Query() query: SearchQuery) {
+    const items = await this.repository.search(query);
 
     return {
       items,

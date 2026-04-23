@@ -18,7 +18,10 @@ services:
       - "4000:4000"
     environment:
       PORT: 4000
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/cura
+      AUTO_MIGRATE: "true"
     depends_on:
+      - postgres
       - redis
 
   analytics:
@@ -32,3 +35,17 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: cura
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

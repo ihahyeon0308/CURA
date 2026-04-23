@@ -11,7 +11,19 @@ export default async function SearchPage({
   const q = typeof params.q === "string" ? params.q : "hospital";
   const specialty = typeof params.specialty === "string" ? params.specialty : undefined;
   const district = typeof params.district === "string" ? params.district : undefined;
-  const results = await getSearchResults({ q, specialty, district, entityType: "all" });
+  let results = [] as Awaited<ReturnType<typeof getSearchResults>>;
+  let searchError = false;
+
+  try {
+    results = await getSearchResults({
+      q,
+      entityType: "all",
+      ...(specialty ? { specialty } : {}),
+      ...(district ? { district } : {}),
+    });
+  } catch {
+    searchError = true;
+  }
 
   return (
     <main className="shell">
@@ -20,7 +32,7 @@ export default async function SearchPage({
         <div className="eyebrow">Unified Search</div>
         <h1 className="headline">Search across Seoul hospitals, specialties, and treatment value signals.</h1>
         <p className="subtle">
-          The current seeded MVP emphasizes confidence-aware hospital ranking, not raw popularity.
+          Ranking is confidence-aware so thin evidence does not overpower better-supported hospital signals.
         </p>
       </section>
 
@@ -33,24 +45,42 @@ export default async function SearchPage({
         </div>
       </section>
 
-      <section className="result-grid">
-        {results.map((result) => (
-          <article key={result.id} className="result-card">
-            <div className="score-label">{result.entityType}</div>
-            <h3>{result.name}</h3>
-            <p className="subtle">{result.subtitle}</p>
-            <div className="chip-row">
-              <span className="chip">rating {result.ratingScore.toFixed(2)}</span>
-              <span className="chip">price {result.priceScore.toFixed(2)}</span>
-              <span className="chip">trust {result.trustScore.toFixed(2)}</span>
-            </div>
-            <p className="subtle">Confidence {result.confidenceScore.toFixed(2)}</p>
-            <Link href={result.href} className="chip">
-              Open detail
-            </Link>
-          </article>
-        ))}
-      </section>
+      {searchError ? (
+        <section className="panel">
+          <h2>Search temporarily unavailable</h2>
+          <p className="subtle">
+            Database or API dependency is not reachable right now. Start PostgreSQL and retry.
+          </p>
+        </section>
+      ) : null}
+
+      {!searchError && results.length === 0 ? (
+        <section className="panel">
+          <h2>No results</h2>
+          <p className="subtle">Try a broader query or remove specialty and district filters.</p>
+        </section>
+      ) : null}
+
+      {!searchError && results.length > 0 ? (
+        <section className="result-grid">
+          {results.map((result) => (
+            <article key={result.id} className="result-card">
+              <div className="score-label">{result.entityType}</div>
+              <h3>{result.name}</h3>
+              <p className="subtle">{result.subtitle}</p>
+              <div className="chip-row">
+                <span className="chip">rating {result.ratingScore.toFixed(2)}</span>
+                <span className="chip">price {result.priceScore.toFixed(2)}</span>
+                <span className="chip">trust {result.trustScore.toFixed(2)}</span>
+              </div>
+              <p className="subtle">Confidence {result.confidenceScore.toFixed(2)}</p>
+              <Link href={result.href} className="chip">
+                Open detail
+              </Link>
+            </article>
+          ))}
+        </section>
+      ) : null}
     </main>
   );
 }
