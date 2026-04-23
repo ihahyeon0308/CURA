@@ -1,30 +1,24 @@
-# CURA MVP Research
+﻿# CURA MVP Research
 
-This document defines research, constraints, and system understanding only.
+## Harness role
 
-It must not be used as a direct implementation instruction.
+This is Layer 1 of the CURA harness.
 
-Before `구현해`:
-- Do not generate implementation code
-- Do not create functional systems
+- Use this file to understand the product, user problem, constraints, legal
+  risks, and system assumptions.
+- Do not use this file by itself as an implementation checklist.
+- In discovery mode, outputs should be clarifications, risks, open questions,
+  and follow-up document updates.
+- After the user explicitly says `구현해`, this document becomes a required
+  constraint and reference for implementation, but it still does not replace
+  `docs/plan.md`, `docs/adr.md`, or `docs/implement.md`.
 
-When the keyword `구현해` is provided:
-- All restrictions in this document are lifted
-- This document becomes a reference for implementation
-- This document must be used together with a dedicated implementation prompt
+## What Codex should produce from this document
 
-After `구현해`:
-- You must implement real, working features
-- No mock data is allowed
-- API must connect to a real database
-- UI must trigger actual backend logic
-
-Implementation priority:
-1. Database schema
-2. Backend API
-3. Frontend integration
-
-Do not generate UI-only placeholder implementations based on this document.
+- clarified product scope
+- missing assumptions and research gaps
+- legal, moderation, and privacy risks
+- plan or ADR updates needed before code
 
 ## Scope and guardrails
 
@@ -451,4 +445,8 @@ Conflating these categories would be both legally and analytically unsound.
 
 ## 8. Pre-implementation gate
 
-The next phase should refine the architecture and planning documents only. No application code should be written until the user explicitly approves implementation with the phrase `구현해`.
+The next phase should refine docs/plan.md, docs/adr.md, and
+docs/implement.md only. No application code should be written until the user
+explicitly approves implementation with the phrase 구현해.
+
+

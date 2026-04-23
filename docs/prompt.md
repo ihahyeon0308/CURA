@@ -1,48 +1,92 @@
-You are a senior full-stack engineer.
+﻿# CURA Prompt Library
 
-구현해.
+Use these prompts when you want consistent Codex behavior across interactive or
+headless sessions.
 
-Based on CURA MVP Research and Plan:
+## Prompt 1: Discovery and gap analysis
 
-This is a full implementation phase.
+```text
+Read CLAUDE.md, docs/research.md, docs/plan.md, and docs/adr.md.
+Stay in discovery mode.
 
-Requirements:
-- Implement a working system (not a prototype)
-- Replace all mock data with real database integration
-- Implement NestJS APIs
-- Connect PostgreSQL using Prisma
-- Implement search (OpenSearch or fallback)
-- Ensure full end-to-end functionality
+Task:
+- summarize the current gap between the scaffold and the target architecture
+- identify the next bounded implementation phase
+- list the files or modules most likely to change
+- do not write product code
 
-Constraints:
-- Follow CURA MVP Plan strictly
-- Use CURA MVP Research as a required reference
-- No mock data
-- No placeholder UI
+Output:
+- scope
+- risks
+- recommended next phase
+- docs that need updating first
+```
 
-Implementation order (must follow):
-1. Database schema (Prisma)
-2. Backend API (NestJS)
-3. Frontend integration (Next.js)
+## Prompt 2: Phase implementation
 
-Definition of Done:
-- PostgreSQL schema is fully defined and migrated
-- At least one working API endpoint (/search) returns real data
-- Frontend calls backend API and displays real results
-- No hardcoded or fake data anywhere
+```text
+구현해
 
-Output format:
-- Step-by-step implementation
-- Show file structure
-- Provide actual code for each step
+Read CLAUDE.md, docs/plan.md, docs/adr.md, and docs/implement.md first.
+Implement exactly one phase or sub-slice.
 
-Do not stop halfway.
-Do not generate static pages.
-Everything must be functional.
+Rules:
+- do not expand scope beyond the active phase
+- no mock data in touched paths
+- verify what you change
+- update docs/implement.md if the phase status changes
 
-Do not implement everything at once.
-Complete one step fully before moving to the next.
-Each step must be fully functional before proceeding.
+Output:
+- code changes
+- verification
+- remaining risks
+```
 
-Do not skip steps.
-Do not summarize implementation.
+## Prompt 3: Architecture compliance review
+
+```text
+Review the current changes against CLAUDE.md, docs/plan.md, and docs/adr.md.
+
+Focus on:
+- regressions
+- architecture drift
+- missing verification
+- violations of confidence, comparability, moderation, or persistence rules
+
+Return findings first, ordered by severity, with file references.
+```
+
+## Prompt 4: ADR update
+
+```text
+Read docs/plan.md and the relevant code changes.
+Update docs/adr.md only if a durable decision has changed.
+
+For each affected ADR:
+- context
+- decision
+- consequence
+
+Do not turn ADRs into a changelog.
+```
+
+## Prompt 5: Document-first refinement
+
+```text
+Stay in discovery mode.
+Improve the Codex harness for this repository.
+
+Goals:
+- tighten document roles
+- remove ambiguity between planning and implementation
+- make the next implementation phase easier to execute repeatedly
+
+Allowed edits:
+- CLAUDE.md
+- docs/research.md
+- docs/plan.md
+- docs/adr.md
+- docs/implement.md
+- docs/prompt.md
+- README.md
+```

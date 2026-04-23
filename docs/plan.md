@@ -1,19 +1,35 @@
-# CURA MVP Plan
+﻿# CURA MVP Plan
 
-## Implementation readiness
+## Harness role
 
-This plan defines the architecture for implementation.
+This is Layer 2 of the CURA harness.
+
+- Use this document to translate research into concrete system boundaries,
+  module ownership, and implementation order.
+- Do not treat this file as automatic permission to start coding.
+- During implementation, use it together with `docs/adr.md` and
+  `docs/implement.md`.
+
+## Build activation
 
 Actual implementation must be triggered by `구현해`.
 
-When triggered:
-- All modules must be implemented as real working systems
-- No mock data or placeholder UI is allowed
-- All implementation must follow this plan
+When build mode is active:
 
-This plan is the primary source of truth for system design during implementation.
+- all modules touched in the active phase must be real working systems
+- no mock data or placeholder UI is allowed in the touched path
+- implementation must follow this plan unless the plan is explicitly updated
 
-If there is any conflict, this plan takes precedence.
+This plan is the primary source of truth for system design during
+implementation.
+
+## What Codex should do with this document
+
+- choose the affected services and modules before editing code
+- identify dependencies and missing prerequisites between phases
+- keep architectural changes explicit instead of letting them drift in code
+- update this file when module boundaries, storage strategy, or delivery order
+  change
 
 ## Scope and protocol
 
@@ -1042,6 +1058,10 @@ function rankHospital(metrics, mode):
 /docs
   research.md
   plan.md
+  adr.md
+  implement.md
+  prompt.md
+CLAUDE.md
 ```
 
 ## 8. Tradeoffs
@@ -1096,4 +1116,8 @@ Decision:
 
 ## 9. Implementation gate
 
-No implementation code should be written until explicit user approval is given with `구현해`. When implementation begins, this plan should be updated incrementally with actual progress and any stack changes made during build-out.
+No implementation code should be written until explicit user approval is given
+with `구현해`. When implementation begins, this plan should be updated
+incrementally with actual progress and any stack changes made during build-out.
+
+
